@@ -46,4 +46,6 @@ pip install -r client_requirements.txt
 ### Selection Menu
 ![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/f01d253b-2c97-4f64-aa9b-ead36bc177f7)
 ### Target Commands
-![manual](https://github.com/fish-not-phish/FHook/assets/69283986/25d74daa-1a18-4574-834e-79de22aca023)
+![manual](https://github.com/fish-not-phish/FHook/assets/69283986/e6f42c74-1c3c-4a96-a643-c8db747bf3ec)
+
+
