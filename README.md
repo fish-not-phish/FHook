@@ -35,7 +35,7 @@ FHook is a Command and Control server which allows an individual to accept conne
 + Steal Browser Passwords
   + Google Chrome
     + Loads passwords into a byte array and sends to the server
-+ Steal Cookies
++ Steal Browser Cookies
   + Google Chrome
     + Loads cookies into a byte array and sends to the server
 
