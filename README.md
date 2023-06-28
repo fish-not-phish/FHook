@@ -9,6 +9,7 @@ FHook is a Command and Control server which allows an individual to accept conne
 + Tracks current working directory
   + Enables server to change directories on the client
 + TLS encryption
++ Gives basic host machine information
 + Check user privileges
 + Download file from client
 + Upload file to client
@@ -25,3 +26,19 @@ FHook is a Command and Control server which allows an individual to accept conne
   + Image is sent to the server
 + Webcam Picture
   + Picture is taken via the webcam and stored in clients memory
+  + Picture is sent to the server
++ Persistence
+  + Registry
+    + Server can give a registry name and the target file to create persistence
+  + Startup
+    + Server can give the target file to add to the startup folder
+
+## Dependencies
+#### Server
+```
+pip install -r server_requirements.txt
+```
+#### Client
+```
+pip install -r client_requirements.txt
+```
