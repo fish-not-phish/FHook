@@ -62,5 +62,6 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -node
 ### Selection Menu
 ![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/dbcf7c9b-33da-4b55-9e87-e128b7d316f7)
 ### Target Commands
-![manual](https://github.com/fish-not-phish/FHook/assets/69283986/6ea02cc6-265b-4ab7-abac-2f488d9dea8c)
+![manual](https://github.com/fish-not-phish/FHook/assets/69283986/b331a3d8-85f6-4bf3-8777-f52f49d906bb)
+
 
