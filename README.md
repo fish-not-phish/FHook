@@ -42,3 +42,8 @@ pip install -r server_requirements.txt
 ```
 pip install -r client_requirements.txt
 ```
+## Command Help
+### Selection Menu
+![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/f01d253b-2c97-4f64-aa9b-ead36bc177f7)
+### Target Commands
+![manual](https://github.com/fish-not-phish/FHook/assets/69283986/25d74daa-1a18-4574-834e-79de22aca023)
