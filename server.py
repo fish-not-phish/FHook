@@ -249,7 +249,7 @@ if __name__ == '__main__':
     sock.listen(5)
     t1 = threading.Thread(target=accept_connections)
     t1.start()
-    print(banner("v1.0"))
+    print(banner("v1.01"))
     print(f'{Color.YELLOW}Run "help" command to see the usage manual{Color.RESET}')
     print(f'{Color.GREEN}[+] Waiting For The Incoming Connections ...{Color.RESET}')
 
