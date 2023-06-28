@@ -1,5 +1,5 @@
 # FHookC2
-![fhook](https://github.com/fish-not-phish/FHook/assets/69283986/01ab29fa-9a71-41ac-8668-53732b541e30)
+![fhook](https://github.com/fish-not-phish/FHook/assets/69283986/1f0618be-9fda-47ec-a400-5e1c82a0d148)
 
 FHookC2 was developed on top of PythonRAT by Safesploit. You can find their GitHub [here](https://github.com/safesploit/PythonRAT/tree/main).
 
@@ -54,8 +54,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -node
 ```
 ## Command Help
 ### Selection Menu
-![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/f01d253b-2c97-4f64-aa9b-ead36bc177f7)
+![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/dbcf7c9b-33da-4b55-9e87-e128b7d316f7)
 ### Target Commands
-![manual](https://github.com/fish-not-phish/FHook/assets/69283986/e6f42c74-1c3c-4a96-a643-c8db747bf3ec)
-
+![manual](https://github.com/fish-not-phish/FHook/assets/69283986/6ea02cc6-265b-4ab7-abac-2f488d9dea8c)
 
