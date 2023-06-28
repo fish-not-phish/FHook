@@ -3,7 +3,7 @@
 
 FHookC2 was developed on top of PythonRAT by Safesploit. You can find their GitHub [here](https://github.com/safesploit/PythonRAT/tree/main).
 
-FHook is a Command and Control server which allows an individual to accept connections from multiple remote clients via a remote access tool. 
+FHook is a Command and Control server which allows an individual to accept connections from multiple remote clients via a remote access tool. This is only for educational purposes, please do not use this to perform any form of illegal activity and always get permission prior to remoting into an individuals device.
 
 ## C2 Features
 + Tracks current working directory
