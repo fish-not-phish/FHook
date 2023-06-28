@@ -42,6 +42,16 @@ pip install -r server_requirements.txt
 ```
 pip install -r client_requirements.txt
 ```
+### OpenSSL
+Download OpenSSL to create a certificate.
+##### Windows
+Download the correct version [here](https://slproweb.com/products/Win32OpenSSL.html).
+#### Linux
+sudo apt install openssl
+#### Creating the certifcate
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+```
 ## Command Help
 ### Selection Menu
 ![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/f01d253b-2c97-4f64-aa9b-ead36bc177f7)
