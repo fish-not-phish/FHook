@@ -58,10 +58,24 @@ sudo apt install openssl
 ```
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 ```
+## Create Exe
+Install pyinstaller python package
+```
+pip install pyinstaller
+```
+Use pyinstaller to create an exe from your client python script.
+```
+pyinstaller --onefile --noconsole client.py
+```
+This should create client.exe inside of a dist (distribution) folder.
 ## Command Help
 ### Selection Menu
 ![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/dbcf7c9b-33da-4b55-9e87-e128b7d316f7)
 ### Target Commands
-![manual](https://github.com/fish-not-phish/FHook/assets/69283986/b331a3d8-85f6-4bf3-8777-f52f49d906bb)
-
-
+![manual](https://github.com/fish-not-phish/FHook/assets/69283986/c2354735-67d6-4678-a36e-5b8c138dff9f)
+## Initial Connection(s)
+![initial_conn](https://github.com/fish-not-phish/FHook/assets/69283986/a74c0f38-a21d-4f2e-8a91-485cb32f65f0)
+## Show All Targets
+![targets](https://github.com/fish-not-phish/FHook/assets/69283986/af50b933-7ffa-464d-a0bd-4059014e697e)
+## Select Target
+![cwd](https://github.com/fish-not-phish/FHook/assets/69283986/49513f88-2396-4531-b686-a22a1ce183d0)
