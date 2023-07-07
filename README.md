@@ -77,7 +77,7 @@ This should create client.exe inside of a dist (distribution) folder.
 ### Selection Menu
 ![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/dbcf7c9b-33da-4b55-9e87-e128b7d316f7)
 ### Target Commands
-![manual](https://github.com/fish-not-phish/FHook/assets/69283986/9a74a286-26e4-44ba-abae-8e1498489708)
+![manual](https://github.com/fish-not-phish/FHook/assets/69283986/6b20eca4-d2ac-44db-bfea-6091b1169334)
 ## Initial Connection(s)
 ![initial_conn](https://github.com/fish-not-phish/FHook/assets/69283986/d50dcc66-e55c-475c-b6bd-3d0762ae2abf)
 ## Show All Targets
