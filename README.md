@@ -58,6 +58,11 @@ sudo apt install openssl
 ```
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 ```
+#### Change SERVER IP
+Please ensure that you change the server IP address from "SERVER IP" to your servers (i.e the attackers) IP address. Both server.py and client.py have this string that needs to be replaced.
+![serverip](https://github.com/fish-not-phish/FHook/assets/69283986/8e508688-9eb3-4738-840a-09b5aafc59e7)
+![clientip](https://github.com/fish-not-phish/FHook/assets/69283986/1d2878ca-d719-4278-b5b2-335cc085adaa)
+
 ## Create Exe
 Install pyinstaller python package
 ```
@@ -72,7 +77,7 @@ This should create client.exe inside of a dist (distribution) folder.
 ### Selection Menu
 ![target_manual](https://github.com/fish-not-phish/FHook/assets/69283986/dbcf7c9b-33da-4b55-9e87-e128b7d316f7)
 ### Target Commands
-![manual](https://github.com/fish-not-phish/FHook/assets/69283986/c2354735-67d6-4678-a36e-5b8c138dff9f)
+![manual](https://github.com/fish-not-phish/FHook/assets/69283986/9a74a286-26e4-44ba-abae-8e1498489708)
 ## Initial Connection(s)
 ![initial_conn](https://github.com/fish-not-phish/FHook/assets/69283986/d50dcc66-e55c-475c-b6bd-3d0762ae2abf)
 ## Show All Targets
